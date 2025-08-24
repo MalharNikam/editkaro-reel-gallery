@@ -8,35 +8,54 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Dark theme for creative agency */
+    --background: 220 25% 8%;
+    --foreground: 210 40% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 220 20% 12%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 220 20% 12%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Electric purple primary */
+    --primary: 270 100% 65%;
+    --primary-foreground: 220 25% 8%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Darker secondary */
+    --secondary: 220 15% 18%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 15% 15%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Cyan accent */
+    --accent: 180 100% 60%;
+    --accent-foreground: 220 25% 8%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 270 100% 65%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Custom design tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(270 100% 65%), hsl(240 100% 70%));
+    --gradient-secondary: linear-gradient(135deg, hsl(180 100% 60%), hsl(200 100% 65%));
+    --gradient-dark: linear-gradient(135deg, hsl(220 25% 8%), hsl(220 20% 12%));
+    --gradient-overlay: linear-gradient(135deg, hsl(270 100% 65% / 0.1), hsl(180 100% 60% / 0.1));
+    
+    --shadow-glow: 0 0 30px hsl(270 100% 65% / 0.3);
+    --shadow-glow-accent: 0 0 30px hsl(180 100% 60% / 0.3);
+    --shadow-elegant: 0 10px 40px hsl(220 25% 5% / 0.5);
+    
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +120,76 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    background: var(--gradient-dark);
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  /* Gradient backgrounds */
+  .bg-gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .bg-gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+  
+  .bg-gradient-overlay {
+    background: var(--gradient-overlay);
+  }
+
+  /* Glow effects */
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .shadow-glow-accent {
+    box-shadow: var(--shadow-glow-accent);
+  }
+  
+  .shadow-elegant {
+    box-shadow: var(--shadow-elegant);
+  }
+
+  /* Smooth transitions */
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  
+  .transition-spring {
+    transition: var(--transition-spring);
+  }
+
+  /* Video card hover effects */
+  .video-card {
+    @apply bg-card border border-border rounded-lg overflow-hidden transition-smooth hover:scale-105 hover:shadow-glow;
+  }
+  
+  .video-card::before {
+    @apply absolute inset-0 bg-gradient-overlay opacity-0 transition-smooth;
+    content: '';
+  }
+  
+  .video-card:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Filter button styles */
+  .filter-btn {
+    @apply px-6 py-3 rounded-full transition-smooth border border-border;
+  }
+  
+  .filter-btn.active {
+    @apply bg-gradient-primary text-primary-foreground shadow-glow;
+  }
+  
+  .filter-btn:not(.active) {
+    @apply bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground;
+  }
+
+  /* Lightbox styles */
+  .lightbox-overlay {
+    @apply fixed inset-0 bg-background/80 backdrop-blur-sm z-50 transition-smooth;
   }
 }
